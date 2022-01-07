@@ -2978,49 +2978,30 @@ JEMALLOC_EXPORT void *(*__memalign_hook)(size_t alignment, size_t size) =
  * be implemented also, so none of glibc's malloc.o functions are added to the
  * link.
  */
-#    define ALIAS(je_fn)	__attribute__((alias (#je_fn), visibility("default")))
+#    define ALIAS(je_fn)	__attribute__((alias (#je_fn), used))
 /* To force macro expansion of je_ prefix before stringification. */
 #    define PREALIAS(je_fn)	ALIAS(je_fn)
 #    ifdef JEMALLOC_OVERRIDE___LIBC_CALLOC
 void *__libc_calloc(size_t n, size_t size) PREALIAS(je_calloc);
-void *calloc(size_t n, size_t size) PREALIAS(je_calloc);
 #    endif
 #    ifdef JEMALLOC_OVERRIDE___LIBC_FREE
 void __libc_free(void* ptr) PREALIAS(je_free);
-void free(void* ptr) PREALIAS(je_free);
 #    endif
 #    ifdef JEMALLOC_OVERRIDE___LIBC_MALLOC
 void *__libc_malloc(size_t size) PREALIAS(je_malloc);
-void *malloc(size_t size) PREALIAS(je_malloc);
 #    endif
 #    ifdef JEMALLOC_OVERRIDE___LIBC_MEMALIGN
 void *__libc_memalign(size_t align, size_t s) PREALIAS(je_memalign);
-void *memalign(size_t align, size_t s) PREALIAS(je_memalign);
 #    endif
 #    ifdef JEMALLOC_OVERRIDE___LIBC_REALLOC
 void *__libc_realloc(void* ptr, size_t size) PREALIAS(je_realloc);
-void *realloc(void* ptr, size_t size) PREALIAS(je_realloc);
 #    endif
 #    ifdef JEMALLOC_OVERRIDE___LIBC_VALLOC
 void *__libc_valloc(size_t size) PREALIAS(je_valloc);
-void *valloc(size_t size) PREALIAS(je_valloc);
 #    endif
 #    ifdef JEMALLOC_OVERRIDE___POSIX_MEMALIGN
 int __posix_memalign(void** r, size_t a, size_t s) PREALIAS(je_posix_memalign);
-int posix_memalign(void** r, size_t a, size_t s) PREALIAS(je_posix_memalign);
 #    endif
-
-void *aligned_alloc(size_t a, size_t s) PREALIAS(je_aligned_alloc);
-
-// If we replace libc malloc and an application calls the malloc_usable_size then we can get a crash
-// Symbol doesn't alias exactly so just wrap it
-JEMALLOC_EXPORT size_t __malloc_usable_size(void *ptr) {
-  return je_malloc_usable_size(ptr);
-}
-JEMALLOC_EXPORT size_t malloc_usable_size(void *ptr) {
-  return je_malloc_usable_size(ptr);
-}
-
 #    undef PREALIAS
 #    undef ALIAS
 #  endif
