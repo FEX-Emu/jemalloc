@@ -23,7 +23,7 @@
 #  include "../jemalloc.h"
 #  undef JEMALLOC_NO_RENAME
 #else
-#  define JEMALLOC_N(n) je_##n
+#  define JEMALLOC_N(n) glibc_je_##n
 #  include "../jemalloc.h"
 #endif
 

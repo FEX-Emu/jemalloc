@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-set (PROJECT_NAME FEX_jemalloc)
+set (PROJECT_NAME FEX_jemalloc_glibc)
 project(${PROJECT_NAME}
   VERSION 5.3.0
   LANGUAGES C CXX)
@@ -81,7 +81,7 @@ function(AddLibrary Name Type)
   set_property(TARGET ${Name} PROPERTY CXX_STANDARD 17)
 
   target_link_libraries(${Name} pthread)
-  set_target_properties(${Name} PROPERTIES OUTPUT_NAME FEX_jemalloc)
+  set_target_properties(${Name} PROPERTIES OUTPUT_NAME FEX_jemalloc_glibc)
 
   target_include_directories(${Name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/)
   target_include_directories(${Name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/pregen/include/)

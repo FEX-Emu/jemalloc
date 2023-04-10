@@ -6,19 +6,19 @@
  * public APIs to be prefixed.  This makes it possible, with some care, to use
  * multiple allocators simultaneously.
  */
-#define JEMALLOC_PREFIX "je_"
-#define JEMALLOC_CPREFIX "JE_"
+/* #undef JEMALLOC_PREFIX */
+/* #undef JEMALLOC_CPREFIX */
 
 /*
  * Define overrides for non-standard allocator-related functions if they are
  * present on the system.
  */
-/* #undef JEMALLOC_OVERRIDE___LIBC_CALLOC */
-/* #undef JEMALLOC_OVERRIDE___LIBC_FREE */
-/* #undef JEMALLOC_OVERRIDE___LIBC_MALLOC */
-/* #undef JEMALLOC_OVERRIDE___LIBC_MEMALIGN */
-/* #undef JEMALLOC_OVERRIDE___LIBC_REALLOC */
-/* #undef JEMALLOC_OVERRIDE___LIBC_VALLOC */
+#define JEMALLOC_OVERRIDE___LIBC_CALLOC 
+#define JEMALLOC_OVERRIDE___LIBC_FREE 
+#define JEMALLOC_OVERRIDE___LIBC_MALLOC 
+#define JEMALLOC_OVERRIDE___LIBC_MEMALIGN 
+#define JEMALLOC_OVERRIDE___LIBC_REALLOC 
+#define JEMALLOC_OVERRIDE___LIBC_VALLOC 
 /* #undef JEMALLOC_OVERRIDE___POSIX_MEMALIGN */
 
 /*
@@ -27,7 +27,7 @@
  * from being exported, but for static libraries, naming collisions are a real
  * possibility.
  */
-#define JEMALLOC_PRIVATE_NAMESPACE je_
+#define JEMALLOC_PRIVATE_NAMESPACE glibc_je_
 
 /*
  * Hyper-threaded CPUs may need a special instruction inside spin loops in
@@ -400,7 +400,7 @@
 #define JEMALLOC_CONFIG_MALLOC_CONF ""
 
 /* If defined, jemalloc takes the malloc/free/etc. symbol names. */
-/* #undef JEMALLOC_IS_MALLOC */
+#define JEMALLOC_IS_MALLOC 
 
 /*
  * Defined if strerror_r returns char * if _GNU_SOURCE is defined.
