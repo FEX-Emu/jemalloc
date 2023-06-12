@@ -13,6 +13,26 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/pregen/include/)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/)
 
+include(CheckCSourceCompiles)
+check_c_source_compiles(
+  "
+  #include <malloc.h>
+  #include <stddef.h>
+  size_t malloc_usable_size(const void *ptr);
+  "
+  CMAKE_JEMALLOC_USABLE_SIZE_CONST)
+
+if (CMAKE_JEMALLOC_USABLE_SIZE_CONST)
+  set(JEMALLOC_USABLE_SIZE_CONST const)
+else()
+  # Set to TRUE so it is defined to nothing.
+  set(JEMALLOC_USABLE_SIZE_CONST TRUE)
+endif()
+
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/jemalloc/jemalloc_defs.h.in
+  ${CMAKE_CURRENT_BINARY_DIR}/include/jemalloc/jemalloc_defs.h)
+
 set (SRCS
 src/jemalloc.c
 src/arena.c
@@ -85,6 +105,7 @@ function(AddLibrary Name Type)
 
   target_include_directories(${Name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/)
   target_include_directories(${Name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/pregen/include/)
+  target_include_directories(${Name} PUBLIC ${CMAKE_CURRENT_BINARY_DIR}/include/)
 
   target_compile_definitions(${Name} PRIVATE -D_GNU_SOURCE -D_REENTRANT)
 

@@ -33,7 +33,7 @@
  *
  * Match the operating system's prototype.
  */
-#undef JEMALLOC_USABLE_SIZE_CONST
+#cmakedefine JEMALLOC_USABLE_SIZE_CONST
 
 /*
  * If defined, specify throw() for the public function prototypes when compiling
