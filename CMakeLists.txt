@@ -19,6 +19,7 @@ check_c_source_compiles(
   #include <malloc.h>
   #include <stddef.h>
   size_t malloc_usable_size(const void *ptr);
+  int main() { return 0; }
   "
   CMAKE_JEMALLOC_USABLE_SIZE_CONST)
 
