@@ -119,7 +119,7 @@
  * _malloc_thread_cleanup() exists, use it as the basis for thread cleanup in
  * malloc_tsd.
  */
-#define JEMALLOC_MALLOC_THREAD_CLEANUP 
+/* #undef JEMALLOC_MALLOC_THREAD_CLEANUP */
 
 /*
  * Defined if threaded initialization is known to be safe on this platform.
@@ -220,7 +220,7 @@
 #define JEMALLOC_RETAIN 
 
 /* TLS is used to map arenas and magazine caches to threads. */
-#define JEMALLOC_TLS 
+/* #undef JEMALLOC_TLS */
 
 /*
  * Used to mark unreachable code to quiet "end of non-void" compiler warnings.
