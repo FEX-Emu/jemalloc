@@ -121,4 +121,4 @@ function(AddLibrary Name Type)
   target_compile_options(${Name} PRIVATE -fvisibility=hidden)
 endfunction()
 
-AddLibrary(${PROJECT_NAME} OBJECT)
+AddLibrary(${PROJECT_NAME} STATIC)
