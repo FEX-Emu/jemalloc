@@ -974,7 +974,7 @@ malloc_slow_flag_init(void) {
 }
 
 /* Number of sources for initializing malloc_conf */
-#define MALLOC_CONF_NSOURCES 5
+#define MALLOC_CONF_NSOURCES 1
 
 static const char *
 obtain_malloc_conf(unsigned which_source, char buf[PATH_MAX + 1]) {
@@ -1066,7 +1066,7 @@ static void
 malloc_conf_init_helper(sc_data_t *sc_data, unsigned bin_shard_sizes[SC_NBINS],
     bool initial_call, const char *opts_cache[MALLOC_CONF_NSOURCES],
     char buf[PATH_MAX + 1]) {
-	static const char *opts_explain[MALLOC_CONF_NSOURCES] = {
+	static const char *opts_explain[] = {
 		"string specified via --with-malloc-conf",
 		"string pointed to by the global variable malloc_conf",
 		"\"name\" of the file referenced by the symbolic link named "
@@ -1742,7 +1742,7 @@ malloc_conf_init_check_deps(void) {
 
 static void
 malloc_conf_init(sc_data_t *sc_data, unsigned bin_shard_sizes[SC_NBINS]) {
-	const char *opts_cache[MALLOC_CONF_NSOURCES] = {NULL, NULL, NULL, NULL,
+	const char *opts_cache[] = {NULL, NULL, NULL, NULL,
 		NULL};
 	char buf[PATH_MAX + 1];
 
