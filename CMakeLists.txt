@@ -59,6 +59,9 @@ src/mutex.c
 src/nstime.c
 src/pages.c
 src/prof.c
+src/prof_log.c
+src/prof_stats.c
+src/prof_sys.c
 src/rtree.c
 src/safety_check.c
 src/stats.c
