@@ -10,12 +10,15 @@ include(CheckPIESupported)
 check_pie_supported()
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-if (MINGW_BUILD)
-  include_directories(${CMAKE_CURRENT_SOURCE_DIR}/pregen-win32/include/)
-else()
-  include_directories(${CMAKE_CURRENT_SOURCE_DIR}/pregen/include/)
+
+set(pregen pregen)
+if (MINGW)
+  set(pregen pregen-win32)
 endif()
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/)
+
+include_directories(
+  ${CMAKE_CURRENT_SOURCE_DIR}/${pregen}/include/
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/)
 
 include(CheckCSourceCompiles)
 check_c_source_compiles(
@@ -107,14 +110,14 @@ function(AddLibrary Name Type)
 
   set_target_properties(${Name} PROPERTIES OUTPUT_NAME FEX_jemalloc)
 
-  target_include_directories(${Name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/)
-  if (MINGW_BUILD)
-    target_include_directories(${Name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/pregen-win32/include/)
-  else()
+  target_include_directories(${Name} PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/
+    ${CMAKE_CURRENT_SOURCE_DIR}/${pregen}/include/
+    ${CMAKE_CURRENT_BINARY_DIR}/include/)
+
+  if (NOT MINGW)
     target_link_libraries(${Name} pthread)
-    target_include_directories(${Name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/pregen/include/)
   endif()
-  target_include_directories(${Name} PUBLIC ${CMAKE_CURRENT_BINARY_DIR}/include/)
 
   target_compile_definitions(${Name} PRIVATE -D_GNU_SOURCE -D_REENTRANT)
 
